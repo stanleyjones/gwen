@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { Layout, SignIn } from "./components";
+import { Home, Settings } from "./views";
+import "./App.css";
 
 function App() {
+  const [isAuthenticated, setAuthenticated] = React.useState<boolean>(false);
+  if (!isAuthenticated) {
+    return <SignIn setAuthenticated={setAuthenticated} />;
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <Outlet />
+          </Layout>
+        }
+      >
+        <Route index element={<Home />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+    </Routes>
   );
 }
 
