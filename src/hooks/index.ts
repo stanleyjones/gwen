@@ -1,0 +1,1 @@
+export { useExternalScript } from "./useExternalScript";

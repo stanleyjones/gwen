@@ -1,0 +1,11 @@
+.SignIn {
+  margin: 25vh auto;
+  width: calc(100vw - 2rem);
+  padding: 1rem;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  max-width: 200px;
+}
+
+#signInWithGoogle {
+}
