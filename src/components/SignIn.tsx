@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { decodeJwt } from "jose";
+import { Box, Center } from "@chakra-ui/react";
 import { useExternalScript } from "../hooks";
 import { useProfileContext } from "../providers/ProfileProvider";
-import "./SignIn.css";
 
 declare global {
   interface Window {
@@ -29,12 +29,16 @@ const handleLoaded = (setProfile: Dispatch<SetStateAction<any>>) => {
 };
 
 export function SignIn() {
-  const { _, setProfile } = useProfileContext();
+  const { setProfile } = useProfileContext();
   useExternalScript(GOOGLE_CLIENT_LIBRARY, () => handleLoaded(setProfile));
   return (
-    <div className="SignIn">
-      <h1>Sign In</h1>
-      <div id="signInWithGoogle">.</div>
-    </div>
+    <Center h="100%" w="100%">
+      <Box bg="white" p={6} borderRadius="lg">
+        <div className="SignIn">
+          <h1>Sign In</h1>
+          <div id="signInWithGoogle">.</div>
+        </div>
+      </Box>
+    </Center>
   );
 }

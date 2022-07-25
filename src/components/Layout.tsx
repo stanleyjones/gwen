@@ -1,12 +1,14 @@
 import React from "react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { Nav } from "../components";
-import "./Layout.css";
 
 export function Layout({ children }: React.PropsWithChildren<{}>) {
   return (
-    <div className="Layout">
-      <Nav />
-      <main className="Main">{children}</main>
-    </div>
+    <Grid h="100%" gap={3} templateColumns="6rem 1fr">
+      <GridItem>
+        <Nav />
+      </GridItem>
+      <GridItem>{children}</GridItem>
+    </Grid>
   );
 }

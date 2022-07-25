@@ -10,5 +10,5 @@ export function useExternalScript(src: string, onload: any) {
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [onload, src]);
 }

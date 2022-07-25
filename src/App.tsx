@@ -1,8 +1,6 @@
-import React from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import { Layout, SignIn } from "./components";
 import { Account, Users, Flows, Home, Settings } from "./views";
-import "./App.css";
 import { useProfileContext } from "./providers/ProfileProvider";
 
 function App() {

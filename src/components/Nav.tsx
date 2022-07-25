@@ -1,33 +1,43 @@
 import { Link } from "react-router-dom";
 import { FiHome, FiSettings, FiCode, FiUsers, FiGift } from "react-icons/fi";
-import "./Nav.css";
+import { Avatar, Center, Stack, IconButton, Box, Text } from "@chakra-ui/react";
 import { useProfileContext } from "../providers/ProfileProvider";
 
 const navItems = [
-  { label: "Home", path: "", icon: FiHome },
-  { label: "Settings", path: "settings", icon: FiSettings },
-  { label: "Flows", path: "flows", icon: FiCode },
-  { label: "Users", path: "users", icon: FiUsers },
-  { label: "Account", path: "account", icon: FiGift },
+  { label: "Home", path: "", Icon: FiHome },
+  { label: "Settings", path: "settings", Icon: FiSettings },
+  { label: "Flows", path: "flows", Icon: FiCode },
+  { label: "Users", path: "users", Icon: FiUsers },
+  { label: "Account", path: "account", Icon: FiGift },
 ];
 
 export function Nav() {
   const { profile } = useProfileContext();
   return (
-    <nav className="Nav">
-      {navItems.map(({ label, path, icon }) => {
-        const Icon = icon;
+    <Stack direction="column" className="Nav">
+      {navItems.map(({ label, path, Icon }) => {
         return (
-          <Link to={path} key={path}>
-            <Icon color="gray" />
-            <div>{label}</div>
+          <Link to={path}>
+            <Box p="2">
+              <Center>
+                <IconButton
+                  icon={<Icon />}
+                  aria-label={label}
+                  variant="outline"
+                />
+              </Center>
+              <Center>
+                <Text>{label}</Text>
+              </Center>
+            </Box>
           </Link>
         );
       })}
-      <div className="profile">
-        <img src={profile.picture} />
-        {profile.name}
-      </div>
-    </nav>
+      <Avatar
+        name={profile.name}
+        src={profile.picture}
+        sx={{ position: "absolute", bottom: 6, left: 6 }}
+      />
+    </Stack>
   );
 }
