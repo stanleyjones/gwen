@@ -1,3 +1,9 @@
+import { Box, Heading } from "@chakra-ui/react";
+
 export function Flows() {
-  return <h1>Flows</h1>;
+  return (
+    <Box p={6}>
+      <Heading>Flows</Heading>
+    </Box>
+  );
 }

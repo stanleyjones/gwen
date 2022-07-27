@@ -1,10 +1,25 @@
 import { Link } from "react-router-dom";
-import { FiHome, FiSettings, FiCode, FiUsers, FiGift } from "react-icons/fi";
-import { Avatar, Center, Stack, IconButton, Box, Text } from "@chakra-ui/react";
+import {
+  FiBarChart2,
+  FiSettings,
+  FiCode,
+  FiUsers,
+  FiGift,
+} from "react-icons/fi";
+import {
+  Avatar,
+  Center,
+  Image,
+  Stack,
+  IconButton,
+  Box,
+  Text,
+} from "@chakra-ui/react";
 import { useProfileContext } from "../providers/ProfileProvider";
+import logo from "../assets/logo.svg";
 
 const navItems = [
-  { label: "Home", path: "", Icon: FiHome },
+  { label: "Dashboard", path: "", Icon: FiBarChart2 },
   { label: "Settings", path: "settings", Icon: FiSettings },
   { label: "Flows", path: "flows", Icon: FiCode },
   { label: "Users", path: "users", Icon: FiUsers },
@@ -15,6 +30,9 @@ export function Nav() {
   const { profile } = useProfileContext();
   return (
     <Stack direction="column" className="Nav">
+      <Center>
+        <Image boxSize="6rem" src={logo} alt="Lifted Logo" p="6" />
+      </Center>
       {navItems.map(({ label, path, Icon }) => {
         return (
           <Link to={path}>
@@ -24,6 +42,7 @@ export function Nav() {
                   icon={<Icon />}
                   aria-label={label}
                   variant="outline"
+                  colorScheme="teal"
                 />
               </Center>
               <Center>
