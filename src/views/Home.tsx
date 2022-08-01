@@ -35,6 +35,7 @@ export function Home() {
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: "5", md: "6" }}>
         {stats.map(({ label, value }) => (
           <Box
+            key={label}
             px={{ base: "4", md: "6" }}
             py={{ base: "5", md: "6" }}
             bg="white"

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import {
-  FiBarChart2,
-  FiSettings,
-  FiCode,
+  FiCreditCard,
+  FiBox,
+  FiActivity,
   FiUsers,
-  FiGift,
+  FiPlay,
 } from "react-icons/fi";
 import {
   Avatar,
@@ -19,11 +19,11 @@ import { useProfileContext } from "../providers/ProfileProvider";
 import logo from "../assets/logo.svg";
 
 const navItems = [
-  { label: "Dashboard", path: "", Icon: FiBarChart2 },
-  { label: "Settings", path: "settings", Icon: FiSettings },
-  { label: "Flows", path: "flows", Icon: FiCode },
+  { label: "Dashboard", path: "", Icon: FiActivity },
+  { label: "Settings", path: "settings", Icon: FiBox },
+  { label: "Flows", path: "flows", Icon: FiPlay },
   { label: "Users", path: "users", Icon: FiUsers },
-  { label: "Account", path: "account", Icon: FiGift },
+  { label: "Billing", path: "account", Icon: FiCreditCard },
 ];
 
 export function Nav() {
@@ -35,7 +35,7 @@ export function Nav() {
       </Center>
       {navItems.map(({ label, path, Icon }) => {
         return (
-          <Link to={path}>
+          <Link key={path} to={path}>
             <Box p="2">
               <Center>
                 <IconButton

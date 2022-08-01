@@ -1,6 +1,15 @@
 import { Outlet, Route, Routes } from "react-router-dom";
-import { Layout, SignIn } from "./components";
-import { Account, Users, Flows, Home, Settings, ModuleSettings } from "./views";
+import {
+  Account,
+  Flow,
+  Flows,
+  Home,
+  Layout,
+  ModuleSettings,
+  Settings,
+  SignIn,
+  Users,
+} from "./views";
 import { useProfileContext } from "./providers/ProfileProvider";
 
 function App() {
@@ -23,7 +32,10 @@ function App() {
           <Route index element={<Settings />} />
           <Route path=":module" element={<ModuleSettings />} />
         </Route>
-        <Route path="flows" element={<Flows />} />
+        <Route path="flows">
+          <Route index element={<Flows />} />
+          <Route path=":flow" element={<Flow />} />
+        </Route>
         <Route path="users" element={<Users />} />
         <Route path="account" element={<Account />} />
       </Route>

@@ -1,97 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
   Button,
-  Center,
   Flex,
-  Grid,
-  GridItem,
   Heading,
   Icon,
-  InputGroup,
   Input,
+  InputGroup,
   InputRightElement,
-  SimpleGrid,
+  Select,
+  Spacer,
   Text,
   Wrap,
   WrapItem,
-  Select,
-  Spacer,
 } from "@chakra-ui/react";
-import {
-  FiPlus,
-  FiBox,
-  FiGlobe,
-  FiDatabase,
-  FiSearch,
-  FiShare2,
-} from "react-icons/fi";
-
-const bundles = [
-  {
-    name: "Blockchain Basics",
-    description: "Decentralized by default",
-    icon: FiGlobe,
-  },
-  {
-    name: "Web2 Essentials",
-    description: "Tried and true functionality",
-    icon: FiDatabase,
-  },
-  {
-    name: "Community Integrations",
-    description: "Connect and conquer",
-    icon: FiShare2,
-  },
-];
-
-const modules = [
-  {
-    name: "Ledger",
-    description: "Mint your own tokens",
-    bundle: "Blockchain Basics",
-  },
-  {
-    name: "Accounts",
-    description: "Transact to win",
-    bundle: "Blockchain Basics",
-  },
-  {
-    name: "Blocks",
-    description: "Chain all the blocks",
-    bundle: "Blockchain Basics",
-  },
-  {
-    name: "Web",
-    description: "Translate HTTP requests",
-    bundle: "Web2 Essentials",
-  },
-  {
-    name: "Name",
-    description: "Map names to addresses",
-    bundle: "Web2 Essentials",
-  },
-  {
-    name: "Files",
-    description: "Store stuff on chain",
-    bundle: "Web2 Essentials",
-  },
-  {
-    name: "git",
-    description: "Push, pull, and more",
-    bundle: "Community Integrations",
-  },
-];
+import { FiBox, FiPlus, FiSearch } from "react-icons/fi";
+import { bundles, modules } from "../settings";
 
 export function Settings() {
+  const [search, setSearch] = useState("");
   return (
     <Box p={6}>
       <Flex>
-        <Box>
-          <Select bg="white">
-            <option value="Manifest" selected>
-              Public Neighborhood
-            </option>
+        <Heading>Settings</Heading>
+        <Box ml={6}>
+          <Select bg="white" defaultValue="Manifest">
+            <option value="Manifest">Public Neighborhood</option>
           </Select>
         </Box>
         <Box ml={6}>
@@ -109,17 +44,21 @@ export function Settings() {
         <Box>
           <InputGroup>
             <InputRightElement pointerEvents="none" children={<FiSearch />} />
-            <Input type="search" placeholder="Search Modules" bg="white" />
+            <Input
+              type="search"
+              placeholder="Search Modules"
+              bg="white"
+              onChange={(ev) => setSearch(ev.target.value)}
+            />
           </InputGroup>
         </Box>
       </Flex>
-      <Heading mt={6}>Settings</Heading>
-      {bundles.map(({ name: bundleName, description, icon: BundleIcon }) => (
-        <Box border="2px solid white" borderRadius="lg" mt={6} p={6}>
+      {bundles.map(({ id, name, description, icon: BundleIcon }) => (
+        <Box key={id} mt={6} p={6} border="1px solid white" borderRadius="lg">
           <Flex>
             <Icon as={BundleIcon} h={9} w={9} mr={3} color="brand.teal.500" />
             <Box>
-              <Heading size="md">{bundleName}</Heading>
+              <Heading size="md">{name}</Heading>
               <Text size="md" mb={3} color="brand.brown.500">
                 {description}
               </Text>
@@ -127,8 +66,13 @@ export function Settings() {
           </Flex>
           <Wrap>
             {modules
-              .filter(({ bundle }) => bundle === bundleName)
-              .map(({ name, description, bundle }) => (
+              .filter(({ name, description }) =>
+                (name + description)
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
+              )
+              .filter(({ bundleId }) => bundleId === id)
+              .map(({ name, description }) => (
                 <WrapItem
                   w="15rem"
                   bg="white"
