@@ -16,7 +16,8 @@ import {
   Tag,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { FiMeh, FiCheck, FiSmile, FiFrown } from "react-icons/fi";
+import { FiUser, FiUsers, FiCheck } from "react-icons/fi";
+import { TbBuildingSkyscraper } from "react-icons/tb";
 
 export function Account() {
   return (
@@ -72,8 +73,8 @@ export function Account() {
       >
         <Box bg="white" rounded="xl" w="100%" p={6} shadow="lg">
           <VStack spacing={6} pt={12}>
-            <Icon as={FiFrown} fontSize="4xl" />
-            <Heading size="md">Free Plan</Heading>
+            <Icon as={FiUser} fontSize="4xl" />
+            <Heading size="md">Personal Plan</Heading>
           </VStack>
           <Flex
             align="flex-end"
@@ -121,8 +122,8 @@ export function Account() {
           transform={{ lg: "scale(1.05)" }}
         >
           <VStack spacing={6} pt={12}>
-            <Icon as={FiMeh} fontSize="4xl" />
-            <Heading size="md">Pro Plan</Heading>
+            <Icon as={FiUsers} fontSize="4xl" />
+            <Heading size="md">Team Plan</Heading>
           </VStack>
           <Flex
             align="flex-end"
@@ -141,7 +142,7 @@ export function Account() {
           <List spacing="4" mb="8" maxW="28ch" mx="auto">
             <ListItem>
               <ListIcon as={FiCheck} marginEnd={2} color="brand.teal.500" />
-              Everything in the Free Plan
+              Everything in the Personal Plan
             </ListItem>
             <ListItem>
               <ListIcon as={FiCheck} marginEnd={2} color="brand.teal.500" />
@@ -156,12 +157,12 @@ export function Account() {
               Unlimited Flows
             </ListItem>
           </List>
-          <Button w="100%">Upgrade to Pro</Button>
+          <Button w="100%">Upgrade to Team</Button>
         </Box>
         <Box bg="white" rounded="xl" w="100%" p={6} shadow="lg">
           <VStack spacing={6} pt={12}>
-            <Icon as={FiSmile} fontSize="4xl" />
-            <Heading size="md">Team Plan</Heading>
+            <Icon as={TbBuildingSkyscraper} fontSize="4xl" />
+            <Heading size="md">Company Plan</Heading>
           </VStack>
           <Flex
             align="flex-end"
@@ -180,7 +181,7 @@ export function Account() {
           <List spacing="4" mb="8" maxW="28ch" mx="auto">
             <ListItem>
               <ListIcon as={FiCheck} marginEnd={2} color="brand.teal.500" />
-              Everything in the Pro Plan
+              Everything in the Team Plan
             </ListItem>
             <ListItem>
               <ListIcon as={FiCheck} marginEnd={2} color="brand.teal.500" />
@@ -192,10 +193,10 @@ export function Account() {
             </ListItem>
             <ListItem>
               <ListIcon as={FiCheck} marginEnd={2} color="brand.teal.500" />
-              More Expensive
+              Custom Branding
             </ListItem>
           </List>
-          <Button w="100%">Upgrade to Team Plan</Button>
+          <Button w="100%">Upgrade to Company</Button>
         </Box>
       </SimpleGrid>
     </Box>

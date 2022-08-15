@@ -33,6 +33,7 @@ export const modules = [
     bundleId: 1,
     enabled: true,
     fields: [
+      { key: "genesis", label: "Genesis State", type: "file" },
       { key: "symbol", label: "Symbol", type: "text", value: "MFX" },
       { key: "supply", label: "Supply", type: "number", value: 100_000_000 },
     ],

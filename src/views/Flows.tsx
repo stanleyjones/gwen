@@ -25,7 +25,7 @@ export function Flows() {
             borderRadius="lg"
             w="15rem"
           >
-            <Image src={webServerScreenshot} h="12rem" borderRadius="lg" />
+            <Image src={webServerScreenshot} h="10rem" borderRadius="lg" />
             <Heading size="sm" p={6}>
               Web Server
             </Heading>
@@ -33,7 +33,7 @@ export function Flows() {
         </WrapItem>
         <WrapItem>
           <Box border="2px solid white" borderRadius="lg" w="15rem">
-            <Center h="12rem">
+            <Center h="10rem">
               <Icon color="brand.teal.500" as={FiPlus} w="15rem" />
             </Center>
             <Heading color="brand.teal.500" size="sm" p={6}>

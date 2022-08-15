@@ -40,6 +40,9 @@
   top: -110px;
   left: 50px;
 }
+[class*="Select_"] {
+  background: white;
+}
 
 [data-flume-component="toast"] {
   box-shadow: none;
