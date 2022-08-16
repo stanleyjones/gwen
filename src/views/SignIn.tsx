@@ -87,11 +87,11 @@ export function SignIn() {
         >
           <Stack spacing="6">
             <Button id="signInWithGoogle" bg="white"></Button>
-            <Button color="white" bg="twitter.500" fontWeight="normal">
+            <Button color="white" bg="twitter.500">
               <Icon as={TwitterIcon} w="1rem" mr={3} />
               Sign in with Twitter
             </Button>
-            <Button color="white" bg="black" fontWeight="normal">
+            <Button color="white" bg="black">
               <Icon as={GitHubIcon} w="1rem" mr={3} />
               Sign in with GitHub
             </Button>
@@ -102,11 +102,11 @@ export function SignIn() {
               </Text>
               <Divider />
             </HStack>
-            <Button color="white" bg="#ff5300" fontWeight="normal">
+            <Button color="white" bg="#ff5300">
               <Image src={ledgerLogo} w="1rem" mr={3} />
               Authenticate with Ledger
             </Button>
-            <Button color="white" bg="#01B757" fontWeight="normal">
+            <Button color="white" bg="#01B757">
               <Image src={trezorLogo} w="1rem" mr={3} />
               Authenticate with Trezor
             </Button>
@@ -117,7 +117,7 @@ export function SignIn() {
               </Text>
               <Divider />
             </HStack>
-            <Button fontWeight="normal">
+            <Button>
               <Image src={Logo} w="1rem" mr={3} />
               Create an account
             </Button>

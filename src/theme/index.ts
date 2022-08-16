@@ -5,6 +5,7 @@ import "@fontsource/rubik/600.css";
 import "@fontsource/rubik/700.css";
 import "@fontsource/rubik/800.css";
 import { extendTheme } from "@chakra-ui/react";
+import { Button } from "./components/button";
 
 export const theme = extendTheme({
   styles: {
@@ -15,6 +16,9 @@ export const theme = extendTheme({
         height: "100%",
       },
     },
+  },
+  components: {
+    Button,
   },
   fonts: {
     heading: "Rubik, sans-serif",

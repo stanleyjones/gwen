@@ -1,5 +1,6 @@
-import { Box, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
+import { Stat } from "../components";
 
 const stats = [
   { label: "Requests per Second", value: "572" },
@@ -34,28 +35,14 @@ export function Home() {
       <Heading mb={6}>Dashboard</Heading>
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: "5", md: "6" }}>
         {stats.map(({ label, value }) => (
-          <Box
-            key={label}
-            px={{ base: "4", md: "6" }}
-            py={{ base: "5", md: "6" }}
-            bg="white"
-            borderRadius="lg"
-            boxShadow="sm"
-          >
-            <Stack>
-              <Text fontSize="sm" color="muted">
-                {label}
-              </Text>
-              <Heading>{value}</Heading>
-            </Stack>
-          </Box>
+          <Stat label={label} value={value} />
         ))}
       </SimpleGrid>
-      <SimpleGrid columns={2} gap="6" sx={{ marginTop: 6 }}>
-        <Box bg="white" borderRadius="lg">
+      <SimpleGrid columns={2} gap="6" mt={6}>
+        <Box bg="white">
           <Chart type="bar" series={data.series} options={data.options} />
         </Box>
-        <Box bg="white" borderRadius="lg">
+        <Box bg="white">
           <Chart type="line" series={data.series} options={data.options} />
         </Box>
       </SimpleGrid>
