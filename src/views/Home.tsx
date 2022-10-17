@@ -1,12 +1,12 @@
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import Chart from "react-apexcharts";
+import { RiArrowLeftRightLine, RiCoinLine, RiUserLine } from "react-icons/ri";
 import { Stat } from "../components";
 
 const stats = [
-  { label: "Requests per Second", value: "572" },
-  { label: "Median Response Time", value: "17ms" },
-  { label: "Successful Requests", value: "100%" },
-  { label: "Invalid Requests", value: "0" },
+  { label: "Number of Accounts", value: "520", icon: RiUserLine },
+  { label: "Ledger Symbols", value: "2", icon: RiCoinLine },
+  { label: "Transactions", value: "40,350", icon: RiArrowLeftRightLine },
 ];
 
 const data = {
@@ -32,10 +32,12 @@ const data = {
 export function Home() {
   return (
     <Box p={6}>
-      <Heading mb={6}>Dashboard</Heading>
+      <Heading size="sm" mb={6}>
+        Dashboard
+      </Heading>
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: "5", md: "6" }}>
-        {stats.map(({ label, value }) => (
-          <Stat label={label} value={value} />
+        {stats.map(({ label, value, icon }) => (
+          <Stat key={label} label={label} value={value} icon={icon} />
         ))}
       </SimpleGrid>
       <SimpleGrid columns={2} gap="6" mt={6}>
