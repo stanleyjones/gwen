@@ -6,19 +6,21 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/rubik/800.css";
 import { extendTheme } from "@chakra-ui/react";
 import { Button } from "./components/button";
+import { Heading } from "./components/heading";
 
 export const theme = extendTheme({
   styles: {
     global: {
       "html,body,#root": {
-        bgColor: "brand.white",
-        color: "brand.black",
+        bgColor: "lifted.gray.50",
+        color: "black",
         height: "100%",
       },
     },
   },
   components: {
     Button,
+    Heading,
   },
   fonts: {
     heading: "Rubik, sans-serif",
@@ -50,6 +52,42 @@ export const theme = extendTheme({
       "700": "#4e3a32",
       "800": "#31221d",
       "900": "#160a00",
+    },
+    "lifted.gray": {
+      "50": "#f7fafc",
+      "100": "#edf2f7",
+      "200": "#e2e8f0",
+      "300": "#cbd5e0",
+      "400": "#a0aec0",
+      "500": "#718096",
+      "600": "#4a5568",
+      "700": "#2d3748",
+      "800": "#1a202c",
+      "900": "#171923",
+    },
+    "lifted.brown": {
+      "50": "#f5f2f3",
+      "100": "#e0dadc",
+      "200": "#c1b5b8",
+      "300": "#a29095",
+      "400": "#8d7773",
+      "500": "#785e66",
+      "600": "#64464f",
+      "700": "#593943",
+      "800": "#4f2d37",
+      "900": "#3c222a",
+    },
+    "lifted.green": {
+      "50": "#f0f9f8",
+      "100": "#d2eeeb",
+      "200": "#96d8d1",
+      "300": "#4bbcb0",
+      "400": "#1eab9c",
+      "500": "#00a08f",
+      "600": "#007165",
+      "700": "#005e54",
+      "800": "#004b43",
+      "900": "#003832",
     },
   },
 });

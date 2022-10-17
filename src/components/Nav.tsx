@@ -1,57 +1,30 @@
-import { Link } from "react-router-dom";
 import {
-  FiCreditCard,
-  FiBox,
-  FiActivity,
-  FiUsers,
-  FiPlay,
-} from "react-icons/fi";
-import {
-  Avatar,
-  Center,
-  Image,
-  Stack,
-  IconButton,
-  Box,
-  Text,
-} from "@chakra-ui/react";
+  RiBankCardLine,
+  RiFlowChart,
+  RiHome2Line,
+  RiServerLine,
+  RiUserLine,
+} from "react-icons/ri";
+import { Avatar, Image, Stack } from "@chakra-ui/react";
+
+import { NavItem } from "../components";
 import { useProfileContext } from "../providers/ProfileProvider";
 import logo from "../assets/logo.svg";
 
 const navItems = [
-  { label: "Dashboard", path: "", Icon: FiActivity },
-  { label: "Settings", path: "settings", Icon: FiBox },
-  { label: "Flows", path: "flows", Icon: FiPlay },
-  { label: "Users", path: "users", Icon: FiUsers },
-  { label: "Billing", path: "account", Icon: FiCreditCard },
+  { label: "Dashboard", path: "", icon: RiHome2Line },
+  { label: "Services", path: "settings", icon: RiServerLine },
+  { label: "Flows", path: "flows", icon: RiFlowChart },
+  { label: "Users", path: "users", icon: RiUserLine },
+  { label: "Billing", path: "account", icon: RiBankCardLine },
 ];
 
 export function Nav() {
   const { profile } = useProfileContext();
   return (
-    <Stack direction="column" className="Nav">
-      <Center>
-        <Image boxSize="6rem" src={logo} alt="Lifted Logo" p="6" />
-      </Center>
-      {navItems.map(({ label, path, Icon }) => {
-        return (
-          <Link key={path} to={path}>
-            <Box p="2">
-              <Center>
-                <IconButton
-                  icon={<Icon />}
-                  aria-label={label}
-                  variant="outline"
-                  colorScheme="teal"
-                />
-              </Center>
-              <Center>
-                <Text>{label}</Text>
-              </Center>
-            </Box>
-          </Link>
-        );
-      })}
+    <Stack boxShadow="xl" h="100vh">
+      <Image boxSize="6rem" src={logo} alt="Lifted Logo" p={3} />
+      {navItems.map(NavItem)}
       <Avatar
         name={profile.name}
         src={profile.picture}
