@@ -6,3 +6,4 @@ export { Layout } from "./Layout";
 export { ModuleSettings } from "./ModuleSettings";
 export { Settings } from "./Settings";
 export { Users } from "./Users";
+export { Splash } from "./Splash";
