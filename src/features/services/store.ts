@@ -1,7 +1,7 @@
-import React from "react";
+import create from "zustand";
 import { LedgerSettings } from "./components";
 
-export interface IService {
+export interface ServiceListing {
   name: string;
   description: string;
   disabled?: boolean;
@@ -9,7 +9,7 @@ export interface IService {
   component?: React.FC;
 }
 
-export const SERVICES: IService[] = [
+export const SERVICES: ServiceListing[] = [
   {
     name: "Ledger",
     description: "Mint your own tokens",
@@ -77,3 +77,37 @@ export const SERVICES: IService[] = [
     disabled: true,
   },
 ];
+
+interface ServicesState {
+  services: ServiceListing[];
+  searchResults: ServiceListing[];
+  searchTerm: string;
+}
+
+interface ServicesActions {
+  setSearchTerm: (t: string) => void;
+}
+
+const byActive = (a: ServiceListing, _b: ServiceListing) =>
+  a.disabled ? 1 : -1;
+const byName = (a: ServiceListing, b: ServiceListing) =>
+  a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
+
+const initialState = {
+  services: SERVICES.sort(byName).sort(byActive),
+  searchResults: SERVICES,
+  searchTerm: "",
+};
+
+export const useServicesStore = create<ServicesState & ServicesActions>(
+  (set) => ({
+    ...initialState,
+    setSearchTerm: (term: string) =>
+      set((state) => ({
+        searchTerm: term,
+        searchResults: state.services.filter(({ name, description }) =>
+          (name + description).toLowerCase().includes(term.toLowerCase())
+        ),
+      })),
+  })
+);
