@@ -5,6 +5,7 @@ import {
   CreateTokenInputs,
   PutValueInputs,
 } from "features/services";
+import { KVStoreValue } from "@liftedinit/many-js/dist/network/modules/kvStore/types";
 
 interface LedgerInfoResponse {
   symbols: Map<string, string>;
@@ -120,7 +121,7 @@ export function useGetValue() {
   const [_, network] = useNetworkContext();
   const keys = useDataServiceStore((s) => s.keys);
 
-  const queries = useQueries<TokenInfo[]>({
+  const queries = useQueries<KVStoreValue[]>({
     queries: keys.map((key) => ({
       queryKey: ["kvstore.get", key, network?.url],
       queryFn: async () => {
