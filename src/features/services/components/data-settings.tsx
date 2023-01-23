@@ -14,7 +14,7 @@ import {
 import { PutValueModal } from "../components";
 import { useAccountsStore } from "features/accounts";
 import { ANON_IDENTITY } from "@liftedinit/many-js";
-import { useDataServiceStore } from "features/services";
+// import { useDataServiceStore } from "features/services";
 
 interface KVData {
   key: string;
@@ -36,7 +36,7 @@ function KVDataRow({ key, value, tag }: KVData) {
 export function DataSettings() {
   const account = useAccountsStore((s) => s.byId.get(s.activeId));
   // @TODO: Fetch all the keys
-  const keys = useDataServiceStore((s) => s.keys);
+  // const keys = useDataServiceStore((s) => s.keys);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
