@@ -54,12 +54,12 @@ export function DataSettings() {
           <Tbody></Tbody>
         </Table>
         {account?.address !== ANON_IDENTITY && (
-        <Flex mt={9} justifyContent="flex-end" w="full">
-          <Button width={{ base: "full", md: "auto" }} onClick={onOpen}>
-            Create New Key
-          </Button>
-        </Flex>
-      )}
+          <Flex mt={9} justifyContent="flex-end" w="full">
+            <Button width={{ base: "full", md: "auto" }} onClick={onOpen}>
+              Create New Key
+            </Button>
+          </Flex>
+        )}
       </Box>
       {isOpen && <PutValueModal isOpen={isOpen} onClose={onClose} />}
     </>

@@ -1,6 +1,7 @@
 import { useNetworkContext } from "features/network";
 import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
 import { CreateTokenInputs, PutValueInputs } from "features/services";
+import { useDataServiceStore } from "features/services/store";
 
 interface LedgerInfoResponse {
   symbols: Map<string, string>;
@@ -94,15 +95,19 @@ export function usePutValue() {
   // eslint-disable-next-line
   const [_, network] = useNetworkContext();
   const queryClient = useQueryClient();
+  const { addKey } = useDataServiceStore();
 
   return useMutation<unknown, Error, PutValueInputs>({
     mutationFn: async (inputs: PutValueInputs) => {
       await network?.kvStore.put(inputs);
     },
-    onSuccess: () =>
+    onSuccess: (_, inputs) => {
+      addKey(inputs.key);
+
       // @TODO: Invalidate the query from liftedinit/roadmap#17
       queryClient.invalidateQueries({
         queryKey: ["", network?.url],
-      }),
+      });
+    },
   });
 }

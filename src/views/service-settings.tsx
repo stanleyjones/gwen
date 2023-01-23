@@ -16,7 +16,7 @@ export function ServiceSettings() {
           / {service?.name}
         </Heading>
       </Flex>
-      {service ? (
+      {service && ServiceComponent ? (
         <ServiceComponent />
       ) : (
         <Alert status="error">
