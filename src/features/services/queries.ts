@@ -1,7 +1,10 @@
 import { useNetworkContext } from "features/network";
 import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
-import { CreateTokenInputs, PutValueInputs } from "features/services";
-import { useDataServiceStore } from "features/services/store";
+import {
+  useDataServiceStore,
+  CreateTokenInputs,
+  PutValueInputs,
+} from "features/services";
 
 interface LedgerInfoResponse {
   symbols: Map<string, string>;
@@ -95,7 +98,7 @@ export function usePutValue() {
   // eslint-disable-next-line
   const [_, network] = useNetworkContext();
   const queryClient = useQueryClient();
-  const { addKey } = useDataServiceStore();
+  const addKey = useDataServiceStore((s) => s.addKey);
 
   return useMutation<unknown, Error, PutValueInputs>({
     mutationFn: async (inputs: PutValueInputs) => {
