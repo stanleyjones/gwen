@@ -14,6 +14,7 @@ import {
 import { PutValueModal } from "../components";
 import { useAccountsStore } from "features/accounts";
 import { ANON_IDENTITY } from "@liftedinit/many-js";
+// import { useDataServiceStore } from "features/services";
 
 interface KVData {
   key: string;
@@ -34,6 +35,8 @@ function KVDataRow({ key, value, tag }: KVData) {
 
 export function DataSettings() {
   const account = useAccountsStore((s) => s.byId.get(s.activeId));
+  // @TODO: Fetch all the keys
+  // const keys = useDataServiceStore((s) => s.keys);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -54,12 +57,12 @@ export function DataSettings() {
           <Tbody></Tbody>
         </Table>
         {account?.address !== ANON_IDENTITY && (
-        <Flex mt={9} justifyContent="flex-end" w="full">
-          <Button width={{ base: "full", md: "auto" }} onClick={onOpen}>
-            Create New Key
-          </Button>
-        </Flex>
-      )}
+          <Flex mt={9} justifyContent="flex-end" w="full">
+            <Button width={{ base: "full", md: "auto" }} onClick={onOpen}>
+              Create New Key
+            </Button>
+          </Flex>
+        )}
       </Box>
       {isOpen && <PutValueModal isOpen={isOpen} onClose={onClose} />}
     </>
