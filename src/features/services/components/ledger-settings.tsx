@@ -15,7 +15,7 @@ import {
   useDisclosure,
   AddressText,
 } from "@liftedinit/ui";
-import { useTokenInfo } from "../queries";
+import { useTokenList, useTokenInfo, TokenInfo } from "../queries";
 import { CreateTokenModal } from "../components";
 import { useAccountsStore } from "features/accounts";
 import { ANON_IDENTITY } from "@liftedinit/many-js";
@@ -38,9 +38,24 @@ function TokenRow({ name, symbol, address }: Token) {
   );
 }
 
+function toToken(token: TokenInfo): Token {
+  return {
+    name: token.info.summary.name,
+    address: token.info.address.toString(),
+    symbol: token.info.summary.symbol,
+  };
+}
+
 export function LedgerSettings() {
   const account = useAccountsStore((s) => s.byId.get(s.activeId));
-  const { data, isError, isLoading } = useTokenInfo();
+  const tokenList = useTokenList();
+  const tokenInfo = useTokenInfo(tokenList);
+
+  const isLoading = tokenInfo.some((q) => q.isLoading);
+  const isError = tokenInfo.some((q) => q.isError);
+  const data = tokenInfo
+    .filter((q) => q.data)
+    .map(({ data }) => toToken(data as TokenInfo));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   if (isLoading) {

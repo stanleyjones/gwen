@@ -1,5 +1,11 @@
 import { useNetworkContext } from "features/network";
-import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "react-query";
 import {
   useDataServiceStore,
   CreateTokenInputs,
@@ -10,7 +16,7 @@ interface LedgerInfoResponse {
   symbols: Map<string, string>;
 }
 
-interface TokenInfo {
+export interface TokenInfo {
   info: {
     address: string;
     summary: {
@@ -24,43 +30,31 @@ interface TokenInfo {
 
 export function useTokenList() {
   const [network] = useNetworkContext();
-  const query = useQuery<LedgerInfoResponse, Error>({
-    queryKey: ["ledger.tokens", network?.url],
-    queryFn: async () => await network?.ledger.info(),
-    enabled: !!network?.url,
-  });
-  const data = query.data?.symbols;
-  return { ...query, data };
+
+  return useQuery<LedgerInfoResponse, Error>(
+    ["tokens"],
+    async () => await network?.ledger.info(),
+    {
+      enabled: !!network?.url,
+      initialData: { symbols: new Map<string, string>() },
+    }
+  );
 }
 
-export function useTokenInfo() {
+export function useTokenInfo(
+  tokenList: UseQueryResult<LedgerInfoResponse, Error>
+) {
   const [network] = useNetworkContext();
-  const { data: tokenListData = new Map() } = useTokenList();
-  const queries = useQueries<TokenInfo[]>({
-    queries: [...tokenListData.entries()].map(([address]) => ({
-      queryKey: ["tokens.info", address, network?.url],
-      queryFn: async () => await network?.tokens.info({ address }),
-    })),
+
+  return useQueries<TokenInfo[]>({
+    queries: tokenList.data
+      ? [...tokenList.data.symbols.entries()].map(([address]) => ({
+          queryKey: ["tokens", address],
+          queryFn: async () => await network?.tokens.info({ address }),
+          enabled: !!network?.url,
+        }))
+      : [],
   });
-  const data = queries.map(({ data }) => {
-    const token = data as TokenInfo;
-    return token
-      ? {
-          name: token.info.summary.name,
-          address: token.info.address.toString(),
-          symbol: token.info.summary.symbol,
-        }
-      : {
-          name: "",
-          address: "",
-          symbol: "",
-        };
-  });
-  return {
-    isLoading: queries.some((query) => query.isLoading),
-    isError: queries.some((query) => query.isError),
-    data,
-  };
 }
 
 export function useCreateToken() {
@@ -85,11 +79,11 @@ export function useCreateToken() {
           [inputs.address]: amount,
         },
       };
-      network?.tokens.create(param);
+      return await network?.tokens.create(param);
     },
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["ledger.tokens", network?.url],
+        queryKey: ["tokens"],
       }),
   });
 }
