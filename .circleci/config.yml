@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
-      - node-options
+      - run: echo 'export NODE_OPTIONS="--max-old-space-size=4096"' >> $BASH_ENV
       - run:
           name: Build staging app
           command: npm run build:staging
@@ -35,7 +35,7 @@ jobs:
     steps:
       - install-packages
       - run: mkdir /tmp/artifacts
-      - node-options
+      - run: echo 'export NODE_OPTIONS="--max-old-space-size=4096"' >> $BASH_ENV
       - run:
           name: Build << parameters.app_env >> app
           command: npm run build:<< parameters.app_env >>
@@ -146,15 +146,3 @@ commands:
           command: node -v && npm -v
       - node/install-packages:
           pkg-manager: npm
-  node-options:
-    description: Set NODE_OPTIONS for environment
-    steps:
-      - run: echo 'export NODE_OPTIONS="--max-old-space-size=4096"' >> $BASH_ENV
-      - when:
-          condition:
-            and:
-              - not:
-                  equal: ["16.16.0", << parameters.node_version >>]
-          steps:
-            # node 17+ workaround https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
-            - run: echo 'export NODE_OPTIONS="--max-old-space-size=4096 --openssl-legacy-provider"' >> $BASH_ENV
