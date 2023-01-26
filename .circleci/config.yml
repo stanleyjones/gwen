@@ -83,8 +83,6 @@ workflows:
           matrix:
             parameters:
               node_version:
-                - "lts"
-                - "current"
                 - "16.16.0"
 
   release:
