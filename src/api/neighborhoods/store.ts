@@ -37,9 +37,15 @@ const NEIGHBORHOODS = [
   },
   {
     name: "Demo Ledger",
-    url: "https://demo.liftedinit.tech/api/",
+    url: "https://demo.liftedinit.tech/api",
     description: "Devnet ledger for demonstrations",
     services: ["blocks", "ledger"],
+  },
+  {
+    name: "Demo KVStore",
+    url: "https://demo.liftedinit.tech/api/kvstore",
+    description: "Devnet key-value store for demonstrations",
+    services: ["blocks", "data"],
   },
 ];
 
