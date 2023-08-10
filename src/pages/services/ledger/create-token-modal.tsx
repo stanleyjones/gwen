@@ -8,14 +8,8 @@ import {
   FormLabel,
   Grid,
   GridItem,
-  HStack,
-  Icon,
   Input,
   Modal,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
   useToast,
 } from "@liftedinit/ui";
 import { NeighborhoodContext } from "api/neighborhoods";
@@ -23,7 +17,6 @@ import { useCreateToken } from "api/services";
 import { useAccountsStore } from "features/accounts";
 import { useContext } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { FiInfo } from "react-icons/fi";
 
 export interface CreateTokenInputs {
   name: string;
@@ -71,7 +64,7 @@ export function CreateTokenModal({
             description: "Token was created",
           });
         },
-      }
+      },
     );
   };
 
@@ -148,22 +141,26 @@ export function CreateTokenModal({
             </FormControl>
           </GridItem>
           <GridItem colSpan={5}>
-            <FormControl>
-              <HStack>
-                <FormLabel htmlFor="address">Destination Address</FormLabel>
-                <Popover trigger="hover">
-                  <PopoverTrigger>
-                    <Icon as={FiInfo} />
-                  </PopoverTrigger>
-                  <PopoverContent bg="brand.teal.700" color="white" p={3}>
-                    <PopoverBody>
-                      The destination address is the current user and cannot be
-                      changed at this time.
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              </HStack>
-              <Input fontFamily="mono" isDisabled value={address} />
+            <FormControl isInvalid={!!errors.address}>
+              <FormLabel htmlFor="address">Destination Address</FormLabel>
+              <Controller
+                name="address"
+                control={control}
+                rules={{
+                  required: true,
+                  validate: {
+                    isManyAddress: (v) => new RegExp(/^m\w{24,}$/).test(v),
+                  },
+                }}
+                render={({ field }) => (
+                  <Input fontFamily="mono" defaultValue={address} {...field} />
+                )}
+              />
+              {errors.address && (
+                <FormErrorMessage>
+                  Must be a valid Many address.
+                </FormErrorMessage>
+              )}
             </FormControl>
           </GridItem>
         </Grid>
