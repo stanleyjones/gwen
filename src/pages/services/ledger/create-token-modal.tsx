@@ -19,10 +19,10 @@ import { useContext } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 export interface CreateTokenInputs {
-  name: string;
-  symbol: string;
   amount: string;
-  address: string;
+  name: string;
+  owner: string;
+  symbol: string;
 }
 
 export function CreateTokenModal({
@@ -49,12 +49,13 @@ export function CreateTokenModal({
   const toast = useToast();
 
   const onSubmit: SubmitHandler<CreateTokenInputs> = ({
-    name,
-    symbol,
     amount,
+    name,
+    owner,
+    symbol,
   }) => {
     doCreateToken(
-      { name, symbol, amount, address },
+      { amount, name, owner, symbol },
       {
         onSuccess: () => {
           onClose();
@@ -64,7 +65,7 @@ export function CreateTokenModal({
             description: "Token was created",
           });
         },
-      },
+      }
     );
   };
 
@@ -141,10 +142,10 @@ export function CreateTokenModal({
             </FormControl>
           </GridItem>
           <GridItem colSpan={5}>
-            <FormControl isInvalid={!!errors.address}>
-              <FormLabel htmlFor="address">Destination Address</FormLabel>
+            <FormControl isInvalid={!!errors.owner}>
+              <FormLabel htmlFor="owner">Owner</FormLabel>
               <Controller
-                name="address"
+                name="owner"
                 control={control}
                 rules={{
                   required: true,
@@ -156,7 +157,7 @@ export function CreateTokenModal({
                   <Input fontFamily="mono" defaultValue={address} {...field} />
                 )}
               />
-              {errors.address && (
+              {errors.owner && (
                 <FormErrorMessage>
                   Must be a valid Many address.
                 </FormErrorMessage>

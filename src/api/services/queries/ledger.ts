@@ -29,10 +29,10 @@ export function useTokenInfo(neighborhood: Network | undefined) {
   return useQueries({
     queries: tokenList
       ? [...tokenList.symbols.entries()].map(([address]) => ({
-          queryKey: [neighborhood?.url, "tokens.info", address],
-          queryFn: async () => await neighborhood?.tokens.info({ address }),
-          enabled: !!neighborhood,
-        }))
+        queryKey: [neighborhood?.url, "tokens.info", address],
+        queryFn: async () => await neighborhood?.tokens.info({ address }),
+        enabled: !!neighborhood,
+      }))
       : [],
   });
 }
@@ -42,27 +42,27 @@ export function useCreateToken(neighborhood: Network | undefined) {
 
   return useMutation(
     async ({
-      address,
       amount,
       name,
-      symbol,
+      owner,
       precision = 9,
+      symbol,
     }: {
-      address: string;
       amount: string;
       name: string;
-      symbol: string;
+      owner: string;
       precision?: number;
+      symbol: string;
     }) =>
       await neighborhood?.tokens.create({
         summary: {
           name,
           symbol: symbol.toUpperCase(),
-          precision: 9,
+          precision,
         },
-        owner: address,
+        owner,
         distribution: {
-          [address]: BigInt(parseInt(amount) * 10 ** precision),
+          [owner]: BigInt(parseInt(amount) * 10 ** precision),
         },
       }),
     {
