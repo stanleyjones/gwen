@@ -20,6 +20,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 export interface CreateTokenInputs {
   amount: string;
+  destination: string;
   name: string;
   owner: string;
   symbol: string;
@@ -50,12 +51,13 @@ export function CreateTokenModal({
 
   const onSubmit: SubmitHandler<CreateTokenInputs> = ({
     amount,
+    destination,
     name,
     owner,
     symbol,
   }) => {
     doCreateToken(
-      { amount, name, owner, symbol },
+      { amount, destination, name, owner, symbol },
       {
         onSuccess: () => {
           onClose();
@@ -142,10 +144,10 @@ export function CreateTokenModal({
             </FormControl>
           </GridItem>
           <GridItem colSpan={5}>
-            <FormControl isInvalid={!!errors.owner}>
-              <FormLabel htmlFor="owner">Owner</FormLabel>
+            <FormControl isInvalid={!!errors.destination}>
+              <FormLabel htmlFor="destination">Destination Address</FormLabel>
               <Controller
-                name="owner"
+                name="destination"
                 control={control}
                 rules={{
                   required: true,
@@ -157,7 +159,7 @@ export function CreateTokenModal({
                   <Input fontFamily="mono" defaultValue={address} {...field} />
                 )}
               />
-              {errors.owner && (
+              {errors.destination && (
                 <FormErrorMessage>
                   Must be a valid Many address.
                 </FormErrorMessage>

@@ -43,12 +43,14 @@ export function useCreateToken(neighborhood: Network | undefined) {
   return useMutation(
     async ({
       amount,
+      destination,
       name,
       owner,
       precision = 9,
       symbol,
     }: {
       amount: string;
+      destination: string;
       name: string;
       owner: string;
       precision?: number;
@@ -62,7 +64,7 @@ export function useCreateToken(neighborhood: Network | undefined) {
         },
         owner,
         distribution: {
-          [owner]: BigInt(parseInt(amount) * 10 ** precision),
+          [destination]: BigInt(parseInt(amount) * 10 ** precision),
         },
       }),
     {
