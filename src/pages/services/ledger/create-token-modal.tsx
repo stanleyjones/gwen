@@ -15,7 +15,7 @@ import {
 import { NeighborhoodContext } from "api/neighborhoods";
 import { useCreateToken } from "api/services";
 import { useAccountsStore } from "features/accounts";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 export interface CreateTokenInputs {
@@ -40,13 +40,17 @@ export function CreateTokenModal({
     isError,
     isLoading,
   } = useCreateToken(neighborhood);
+  const account = useAccountsStore((s) => s.byId.get(s.activeId));
+  const address = account?.address ?? "";
   const {
     control,
     formState: { errors },
+    reset,
     handleSubmit,
-  } = useForm<CreateTokenInputs>();
-  const account = useAccountsStore((s) => s.byId.get(s.activeId));
-  const address = account?.address ?? "";
+  } = useForm<CreateTokenInputs>({
+    defaultValues: { destination: address },
+  });
+  useEffect(() => reset({ destination: address }), [address, reset]);
   const toast = useToast();
 
   const onSubmit: SubmitHandler<CreateTokenInputs> = ({
@@ -155,9 +159,7 @@ export function CreateTokenModal({
                     isManyAddress: (v) => new RegExp(/^m\w{24,}$/).test(v),
                   },
                 }}
-                render={({ field }) => (
-                  <Input fontFamily="mono" defaultValue={address} {...field} />
-                )}
+                render={({ field }) => <Input fontFamily="mono" {...field} />}
               />
               {errors.destination && (
                 <FormErrorMessage>
