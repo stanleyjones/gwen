@@ -8,28 +8,22 @@ import {
   FormLabel,
   Grid,
   GridItem,
-  HStack,
-  Icon,
   Input,
   Modal,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
   useToast,
 } from "@liftedinit/ui";
 import { NeighborhoodContext } from "api/neighborhoods";
 import { useCreateToken } from "api/services";
 import { useAccountsStore } from "features/accounts";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { FiInfo } from "react-icons/fi";
 
 export interface CreateTokenInputs {
-  name: string;
-  symbol: string;
   amount: string;
-  address: string;
+  destination: string;
+  name: string;
+  owner: string;
+  symbol: string;
 }
 
 export function CreateTokenModal({
@@ -46,22 +40,28 @@ export function CreateTokenModal({
     isError,
     isLoading,
   } = useCreateToken(neighborhood);
+  const account = useAccountsStore((s) => s.byId.get(s.activeId));
+  const address = account?.address ?? "";
   const {
     control,
     formState: { errors },
+    reset,
     handleSubmit,
-  } = useForm<CreateTokenInputs>();
-  const account = useAccountsStore((s) => s.byId.get(s.activeId));
-  const address = account?.address ?? "";
+  } = useForm<CreateTokenInputs>({
+    defaultValues: { destination: address },
+  });
+  useEffect(() => reset({ destination: address }), [address, reset]);
   const toast = useToast();
 
   const onSubmit: SubmitHandler<CreateTokenInputs> = ({
-    name,
-    symbol,
     amount,
+    destination,
+    name,
+    owner,
+    symbol,
   }) => {
     doCreateToken(
-      { name, symbol, amount, address },
+      { amount, destination, name, owner, symbol },
       {
         onSuccess: () => {
           onClose();
@@ -148,22 +148,24 @@ export function CreateTokenModal({
             </FormControl>
           </GridItem>
           <GridItem colSpan={5}>
-            <FormControl>
-              <HStack>
-                <FormLabel htmlFor="address">Destination Address</FormLabel>
-                <Popover trigger="hover">
-                  <PopoverTrigger>
-                    <Icon as={FiInfo} />
-                  </PopoverTrigger>
-                  <PopoverContent bg="brand.teal.700" color="white" p={3}>
-                    <PopoverBody>
-                      The destination address is the current user and cannot be
-                      changed at this time.
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              </HStack>
-              <Input fontFamily="mono" isDisabled value={address} />
+            <FormControl isInvalid={!!errors.destination}>
+              <FormLabel htmlFor="destination">Destination Address</FormLabel>
+              <Controller
+                name="destination"
+                control={control}
+                rules={{
+                  required: true,
+                  validate: {
+                    isManyAddress: (v) => new RegExp(/^m\w{24,}$/).test(v),
+                  },
+                }}
+                render={({ field }) => <Input fontFamily="mono" {...field} />}
+              />
+              {errors.destination && (
+                <FormErrorMessage>
+                  Must be a valid Many address.
+                </FormErrorMessage>
+              )}
             </FormControl>
           </GridItem>
         </Grid>
